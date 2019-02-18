@@ -9,8 +9,29 @@ class MoviesController < ApplicationController
     @movie = Movie.find(id) # look up movie by unique ID
     # will render app/views/movies/show.<extension> by default
   end
-
+  
   def index
+    @all_ratings = Movie.ratings
+    if ( params[:order].nil? && params[:ratings].nil? &&
+        (!session[:order].nil? || !session[:ratings].nil?) )
+      redirect_to movies_path(:order => session[:order], :ratings => session[:ratings])
+    end
+    @order = params[:order]
+    @ratings = params[:ratings] 
+    if !(params[:ratings].nil?)
+      @movies = Movie.where(rating: params[:ratings].keys)
+      @choosen_ratings = params[:ratings].keys
+    else
+      @choosen_ratings = @all_ratings
+      @movies = Movie.all
+    end
+    session[:order] = @order
+    session[:ratings] = @ratings
+    if !params[:order].nil?
+      @movies = @movies.order(params[:order]).all
+    end
+    
+    '''
     @all_ratings = Movie.ratings
     if !(params[:ratings].nil?)
       @choosen_ratings = params[:ratings].keys
@@ -23,6 +44,7 @@ class MoviesController < ApplicationController
     if !params[:order].nil?
       @movies = @movies.order(params[:order]).all
     end
+    '''
   end
 
   def new
