@@ -12,21 +12,22 @@ class MoviesController < ApplicationController
   
   def index
     @all_ratings = Movie.ratings
-    if !params[:order].nil?
+    if params[:order]
       @order = params[:order]
-    elsif !session[:order].nil?
+    elsif session[:order]
       @order =  session[:order]
       redir = true
     end
 
-    if !params[:ratings].nil?
+    if params[:ratings]
       @choosen_ratings = params[:ratings]
-    elsif !session[:ratings].nil?
+    elsif session[:ratings]
       @choosen_ratings = session[:ratings]
       redir = true
-    else
-      @choosen_ratings = @all_ratings
+    #else
+     #@choosen_ratings = @all_ratings
     end
+    
       
     session[:order] = @order
     session[:ratings] = @choosen_ratings
@@ -35,7 +36,7 @@ class MoviesController < ApplicationController
     end
  
     
-    if !(@choosen_ratings.nil?)
+    if @choosen_ratings
       @movies = Movie.where(rating: session[:ratings].keys)
     else
       @choosen_ratings = @all_ratings
@@ -43,7 +44,7 @@ class MoviesController < ApplicationController
     end
       
     
-    if !(@order.nil?)
+    if @order
       @movies = @movies.order(session[:order]).all
     end
   
