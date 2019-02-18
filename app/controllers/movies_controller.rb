@@ -11,7 +11,7 @@ class MoviesController < ApplicationController
   end
   
   def index
-    
+    @all_ratings = Movie.ratings
     if !params[:order].nil?
       @order = params[:order]
     elsif !session[:order].nil?
@@ -34,14 +34,14 @@ class MoviesController < ApplicationController
  
     
     if @ratings
-      @movies = Movie.where(rating: @choosen_ratings)
+      @movies = Movie.where(rating: session[:ratings])
     else
       @movies = Movie.all
     end
       
     
     if !(@order.nil?)
-      @movies = @movies.order(@order).all
+      @movies = @movies.order(session[:order]).all
     end
   
   
