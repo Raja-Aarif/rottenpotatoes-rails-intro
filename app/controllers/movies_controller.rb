@@ -19,6 +19,7 @@ class MoviesController < ApplicationController
       @choosen_ratings = @all_ratings
       @movies = Movie.all
     end
+    
     if !params[:order].nil?
       @movies = @movies.order(params[:order]).all
     end
