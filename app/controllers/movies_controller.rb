@@ -24,8 +24,8 @@ class MoviesController < ApplicationController
     elsif !session[:ratings].nil?
       @choosen_ratings = session[:ratings]
       redir = true
-    else
-      @choosen_ratings = @all_ratings
+    #else
+    #  @choosen_ratings = @all_ratings
     end
       
     session[:order] = @order
@@ -38,6 +38,7 @@ class MoviesController < ApplicationController
     if !(@choosen_ratings.nil?)
       @movies = Movie.where(rating: session[:ratings].keys)
     else
+      @choosen_ratings = @all_ratings
       @movies = Movie.all
     end
       
