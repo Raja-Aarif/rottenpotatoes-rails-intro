@@ -33,7 +33,7 @@ class MoviesController < ApplicationController
     end
  
     
-    if @ratings
+    if @choosen_ratings
       @movies = Movie.where(rating: session[:ratings])
     else
       @movies = Movie.all
