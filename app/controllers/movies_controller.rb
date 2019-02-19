@@ -35,7 +35,7 @@ class MoviesController < ApplicationController
     end
  
     if @choosen_ratings
-      @movies = Movie.where(rating: session[:ratings].keys) #filtering based on ratings
+      @movies = Movie.where(rating: session[:ratings].keys) #filtering done based on ratings
     else
       @choosen_ratings = @all_ratings
       @movies = Movie.all
