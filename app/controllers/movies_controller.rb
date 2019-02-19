@@ -30,9 +30,6 @@ class MoviesController < ApplicationController
       @order =  session[:order]
       redir = true
     end
-
-
-    
       
     session[:order] = @order
     session[:ratings] = @choosen_ratings
