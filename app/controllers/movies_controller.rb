@@ -11,43 +11,38 @@ class MoviesController < ApplicationController
   end
   
   def index
-    redir = false
+    redir = false #variable which will  be set true if redirection required
     @all_ratings = Movie.ratings
-    
-    
+
     if params[:ratings]
       @choosen_ratings = params[:ratings]
     elsif session[:ratings]
-      @choosen_ratings = session[:ratings]
-      redir = true
-    #else
-     #@choosen_ratings = @all_ratings
+      @choosen_ratings = session[:ratings]  #choosing session ratings if no params ratings
+      redir = true   
     end
     
     if params[:order]
       @order = params[:order]
     elsif session[:order]
-      @order =  session[:order]
+      @order =  session[:order]   #choosing session order if no params order
       redir = true
     end
       
     session[:order] = @order
     session[:ratings] = @choosen_ratings
     if redir
-      redirect_to movies_path(:order => session[:order] , :ratings => session[:ratings])
+      redirect_to movies_path(:order => session[:order] , :ratings => session[:ratings])  #redirecting passing the session parameters
     end
  
-    
     if @choosen_ratings
-      @movies = Movie.where(rating: session[:ratings].keys)
+      @movies = Movie.where(rating: session[:ratings].keys) #filtering based on ratings
     else
       @choosen_ratings = @all_ratings
       @movies = Movie.all
     end
       
-    
     if @order
-      @movies = @movies.order(@order).all
+      @movies = @movies.order(@order).all #filtering based on order
     end
   end
 
