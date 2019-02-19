@@ -52,23 +52,6 @@ class MoviesController < ApplicationController
     if @order
       @movies = @movies.order(@order).all
     end
-  
-  
-    
-    '''
-    @all_ratings = Movie.ratings
-    if !(params[:ratings].nil?)
-      @choosen_ratings = params[:ratings].keys
-      @movies = Movie.where(rating: params[:ratings].keys)
-    else
-      @choosen_ratings = @all_ratings
-      @movies = Movie.all
-    end
-    
-    if !params[:order].nil?
-      @movies = @movies.order(params[:order]).all
-    end
-    '''
   end
 
   def new
